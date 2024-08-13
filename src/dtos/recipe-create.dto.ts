@@ -26,7 +26,7 @@ export class RecipeCreateDto {
   description: string;
 
   @IsNotEmpty()
-  @IsArray({ each: true })
+  @IsArray()
   @ApiProperty({
     required: true,
     type: [Ingredient],
@@ -38,7 +38,7 @@ export class RecipeCreateDto {
 
   @IsString()
   @ApiProperty({ required: true, type: String, example: 'Massas' })
-  category: String;
+  category: string;
 
   @IsBoolean()
   @ApiProperty({ type: Boolean, example: true })

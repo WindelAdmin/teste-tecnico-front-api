@@ -20,44 +20,41 @@ export class AppController {
 
   @Post()
   @ApiOkResponse({ type: RecipeModelDto, isArray: true })
-  create(@Body() data: RecipeCreateDto): RecipeModelDto {
-    return {
-      id: 1,
-      name: data.name,
-      description: data.description,
-      ingredients: data.ingredients,
-      category: data.category,
-      isFavorite: false,
-    };
+  async create(@Body() data: RecipeCreateDto): Promise<RecipeModelDto> {
+    return await this.appService.create(data);
   }
 
   @Delete(':id')
   @ApiOkResponse({
     schema: {
-      example: 'Registro deletado com sucesso.',
+      example: 'Receita deletada com sucesso.',
     },
   })
-  delete(@Param('id') id: number) {}
+  async delete(@Param('id') id: number) {
+    await this.appService.delete(+id);
+    return { message: 'Receita deletada com sucesso.' };
+  }
 
   @Post('/batch')
   @ApiOkResponse({
     schema: {
-      example: 'Registros deletados com sucesso.',
+      example: 'Receitas deletadas com sucesso.',
     },
   })
-  deleteInBatch(@Body() registers: RecipeDeleteInBatchDto) {
-    console.log(registers);
+  async deleteInBatch(@Body() registers: RecipeDeleteInBatchDto) {
+    await this.appService.deleteInBatch(registers.registersId);
+    return { message: 'Receitas deletadas com sucesso.' };
   }
 
   @Get()
   @ApiOkResponse({ type: RecipeModelDto, isArray: true })
-  findMany(@Query() params: RecipeFindManyFilters): string {
-    return this.appService.getHello();
+  findMany(@Query() params: RecipeFindManyFilters) {
+    return this.appService.findMany(params);
   }
 
   @Get('/:id')
   @ApiOkResponse({ type: RecipeModelDto })
-  findOne(@Param('id') id: string): string {
-    return 'teste';
+  async findOne(@Param('id') id: string) {
+    return this.appService.findOne(+id);
   }
 }
