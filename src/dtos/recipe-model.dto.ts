@@ -1,6 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import {
   IsArray,
+  IsBoolean,
   IsNotEmpty,
   IsNumber,
   IsOptional,
@@ -16,13 +17,12 @@ export class RecipeModelDto {
 
   @IsString()
   @IsNotEmpty()
-  @ApiProperty({ required: true, type: String, example: 'Torta' })
+  @ApiProperty({ type: String, example: 'Torta' })
   name: string;
 
   @IsString()
   @IsOptional()
   @ApiProperty({
-    required: true,
     type: String,
     example: 'Sobremesa para ocasiões familiares',
   })
@@ -31,13 +31,16 @@ export class RecipeModelDto {
   @IsNotEmpty()
   @IsArray({ each: true })
   @ApiProperty({
-    required: true,
     type: [Ingredient],
     example: { name: 'Farinha de Trigo', quantity: 2 },
   })
   ingredients: Ingredient[];
 
   @IsString()
-  @ApiProperty({ required: true, type: String, example: 'Massas' })
+  @ApiProperty({ type: String, example: 'Massas' })
   category: String;
+
+  @IsBoolean()
+  @ApiProperty({ type: Boolean, example: true })
+  isFavorite: boolean;
 }

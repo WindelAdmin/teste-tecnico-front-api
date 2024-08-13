@@ -27,13 +27,24 @@ export class AppController {
       description: data.description,
       ingredients: data.ingredients,
       category: data.category,
+      isFavorite: false,
     };
   }
 
   @Delete(':id')
-  delete(@Param('id') id: string) {}
+  @ApiOkResponse({
+    schema: {
+      example: 'Registro deletado com sucesso.',
+    },
+  })
+  delete(@Param('id') id: number) {}
 
   @Post('/batch')
+  @ApiOkResponse({
+    schema: {
+      example: 'Registros deletados com sucesso.',
+    },
+  })
   deleteInBatch(@Body() registers: RecipeDeleteInBatchDto) {
     console.log(registers);
   }
