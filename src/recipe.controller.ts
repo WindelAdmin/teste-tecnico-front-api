@@ -35,7 +35,7 @@ export class RecipeController {
     return { message: 'Receita deletada com sucesso.' };
   }
 
-  @Post('/batch')
+  @Post('/delete-in-batch')
   @ApiOkResponse({
     schema: {
       example: 'Receitas deletadas com sucesso.',
