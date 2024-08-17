@@ -32,7 +32,7 @@ export class RecipeModelDto {
   @IsArray({ each: true })
   @ApiProperty({
     type: [Ingredient],
-    example: { name: 'Farinha de Trigo', quantity: 2 },
+    example: [{ name: 'Farinha de Trigo', quantity: 2 }],
   })
   ingredients: Ingredient[];
 
