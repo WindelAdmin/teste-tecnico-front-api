@@ -4,6 +4,7 @@ import {
   Delete,
   Get,
   Param,
+  Patch,
   Post,
   Query,
 } from '@nestjs/common';
@@ -13,15 +14,25 @@ import { RecipeFindManyFilters } from './dtos/find-many-filters.dto';
 import { RecipeCreateDto } from './dtos/recipe-create.dto';
 import { RecipeDeleteInBatchDto } from './dtos/recipe-delete-in-batch.dto';
 import { RecipeModelDto } from './dtos/recipe-model.dto';
+import { RecipeUpdateDto } from './dtos/recipe-update.dto';
 
 @Controller('recipe')
 export class RecipeController {
   constructor(private readonly appService: AppService) {}
 
   @Post()
-  @ApiOkResponse({ type: RecipeModelDto, isArray: true })
+  @ApiOkResponse({ type: RecipeModelDto })
   async create(@Body() data: RecipeCreateDto): Promise<RecipeModelDto> {
     return await this.appService.create(data);
+  }
+
+  @Patch(':id')
+  @ApiOkResponse({ type: RecipeModelDto })
+  async update(
+    @Param('id') id: string,
+    @Body() data: RecipeUpdateDto,
+  ): Promise<RecipeModelDto> {
+    return await this.appService.update(+id, data);
   }
 
   @Delete(':id')
